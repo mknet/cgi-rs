@@ -1,0 +1,15 @@
+[package]
+name = "tower-cgi"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+
+[dependencies]
+cgi-rs = { path = "../cgi-rs" }
+hyper = { version = "0.14", default-features = false }
+snafu = "0.7"
+tower = { version = "0.4", default-features = false, features = ["util"] }
+
+[dev-dependencies]
+axum = "0.6"
+tokio = { version = "1", features = ["full"] }

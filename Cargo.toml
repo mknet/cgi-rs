@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "tower-cgi",
+    "cgi-rs",
+    "sample-cgi-script",
+]
