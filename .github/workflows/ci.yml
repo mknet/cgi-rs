@@ -1,0 +1,33 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "develop" ]
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE**'
+      - '.gitignore'
+
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE**'
+      - '.gitignore'
+    branches: [ "develop" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: cargo build --verbose
+    - name: Run tests
+      run: cargo test --verbose
+    - name: Check formatting
+      run: cargo fmt -- --check
