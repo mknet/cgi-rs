@@ -6,6 +6,9 @@ async fn main() {
     let app = Router::new().route(
         "/cgi-bin/sample-cgi-server",
         get(|| async { "Hello, World!" }),
+    ).route(
+        "/cgi-bin/sample-cgi-server/with/path-info",
+        get(|| async { "Hello, PATH_INFO" }),
     );
 
     if let Err(e) = serve_cgi(app).await {

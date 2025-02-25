@@ -44,11 +44,22 @@ impl CGIRequest {
         self.var(MetaVariableKind::RequestUri)
             .map(|uri| Ok(uri.as_str()?.to_string()))
             .unwrap_or_else(|| {
+
+                let path_info_str = match MetaVariableKind::PathInfo.try_from_env() {
+                    Ok(meta_variable) => {
+                       String::from(meta_variable.as_str().unwrap_or(""))
+                    }
+                    Err(_) => {
+                        String::from("")
+                    }
+                };
+
                 let script_name = MetaVariableKind::ScriptName.try_from_env()?;
                 let query_string = MetaVariableKind::QueryString.try_from_env()?;
                 Ok(format!(
-                    "{}?{}",
+                    "{}{}?{}",
                     script_name.as_str()?,
+                    path_info_str,
                     query_string.as_str()?
                 ))
             })
