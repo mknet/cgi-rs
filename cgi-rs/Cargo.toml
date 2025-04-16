@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-hyper = "0.14"
+http-body-util = "0.1.2"
+hyper = "1.6.0"
 snafu = "0.8"
 tokio = "1"
+bytes = "1.10.0"
