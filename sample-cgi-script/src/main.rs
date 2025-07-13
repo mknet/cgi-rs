@@ -1,6 +1,7 @@
 use axum::{routing::get, Router};
 use axum::http::StatusCode;
 use axum::response::Response;
+use rusqlite::{named_params, Connection};
 use tower_cookies::{Cookie, Cookies};
 use tower_sessions::cookie::time::Duration;
 use tower_sessions::{MemoryStore, Session, SessionStore};
@@ -26,8 +27,29 @@ async fn main() {
             session.insert("foo", "bar").await.unwrap();
             let value: String = session.get("foo").await.unwrap().unwrap_or("no value".to_string());
 
-            value
+            let conn = Connection::open("./my_database.db").unwrap();
+            conn.execute(
+                "CREATE TABLE IF NOT EXISTS user (
+            id INTEGER PRIMARY KEY,
+            name TEXT NOT NULL,
+            age INTEGER
+        )",
+                [],
+            ).unwrap();
 
+            let mut stmt = conn.prepare("INSERT INTO user (name, age) VALUES (?,?)").unwrap();
+            stmt.execute(["Alice", "30"]).unwrap();
+
+            let mut stmt = conn.prepare("SELECT * FROM user").unwrap();
+            let mut one: String = "".into();
+            let mut rows = stmt.query([]).unwrap();
+            while let Some(row) = rows.next().unwrap() {
+                let name: String = row.get(1).unwrap();
+                one.push_str(name.as_str())
+            }
+
+
+            one
         }),
     ).route(
         "/cgi-bin/sample-cgi-server/with/path-info",

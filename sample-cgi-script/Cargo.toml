@@ -12,3 +12,4 @@ tokio = { version = "1", features = ["full"] }
 tower-sessions = "0.14.0"
 tower-cookies = "0.11.0"
 tower-sessions-file-based-store = "*"
+rusqlite = "0.33.0"
