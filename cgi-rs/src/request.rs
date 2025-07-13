@@ -107,6 +107,7 @@ impl <B>TryFrom<CGIRequest<B>> for Request<B> where B: Body {
             ["Accept", MetaVariableKind::HttpAccept],
             ["Host", MetaVariableKind::HttpHost],
             ["User-Agent", MetaVariableKind::HttpUserAgent],
+            ["Cookie", MetaVariableKind::HttpCookie],
         );
 
         request_builder

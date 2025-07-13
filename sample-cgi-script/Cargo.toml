@@ -9,3 +9,6 @@ publish = false
 axum = "0.8.1"
 tower-cgi = { path = "../tower-cgi" }
 tokio = { version = "1", features = ["full"] }
+tower-sessions = "0.14.0"
+tower-cookies = "0.11.0"
+tower-sessions-file-based-store = "*"

@@ -108,6 +108,7 @@ pub enum MetaVariableKind {
     HttpHost,
     HttpUserAgent,
     HttpAccept,
+    HttpCookie,
     ServerSignature,
     DocumentRoot,
     RequestScheme,
@@ -150,6 +151,7 @@ impl MetaVariableKind {
             MetaVariableKind::ScriptFilename => "SCRIPT_FILENAME",
             MetaVariableKind::RemotePort => "REMOTE_PORT",
             MetaVariableKind::RequestUri => "REQUEST_URI",
+            MetaVariableKind::HttpCookie => "HTTP_COOKIE"
         }
     }
 
