@@ -104,6 +104,7 @@ impl <B>TryFrom<CGIRequest<B>> for Request<B> where B: Body {
             request_builder,
             cgi_request,
             ["Content-Length", MetaVariableKind::ContentLength],
+            ["Authorization", MetaVariableKind::HttpAuthorization],
             ["Accept", MetaVariableKind::HttpAccept],
             ["Host", MetaVariableKind::HttpHost],
             ["User-Agent", MetaVariableKind::HttpUserAgent],

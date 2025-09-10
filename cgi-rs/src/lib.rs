@@ -105,6 +105,7 @@ pub enum MetaVariableKind {
 
     // Not in the RFC, but emitted from httpd's mod_cgi
     UniqueID,
+    HttpAuthorization,
     HttpHost,
     HttpUserAgent,
     HttpAccept,
@@ -122,6 +123,7 @@ pub enum MetaVariableKind {
 impl MetaVariableKind {
     fn as_str(&self) -> &'static str {
         match self {
+            MetaVariableKind::HttpAuthorization => "HTTP_AUTHORIZATION",
             MetaVariableKind::AuthType => "AUTH_TYPE",
             MetaVariableKind::ContentLength => "CONTENT_LENGTH",
             MetaVariableKind::ContentType => "CONTENT_TYPE",
