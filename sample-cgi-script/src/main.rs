@@ -1,12 +1,9 @@
-use axum::http::StatusCode;
-use axum::response::Response;
 use axum::{routing::get, Router};
-use rusqlite::{named_params, Connection};
+use rusqlite::Connection;
 use tower_cgi::serve_cgi;
 use tower_cookies::{Cookie, Cookies};
 use tower_sessions::cookie::time::Duration;
-use tower_sessions::session::Record;
-use tower_sessions::{MemoryStore, Session, SessionStore};
+use tower_sessions::{MemoryStore, Session};
 
 #[tokio::main]
 async fn main() {

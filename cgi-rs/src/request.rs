@@ -1,10 +1,8 @@
 use crate::{error, CGIError, MetaVariable, MetaVariableKind, Result};
-use http_body_util::combinators::BoxBody;
 use http_body_util::Full;
 use hyper::body::{Body, Bytes};
 use hyper::Request;
 use snafu::ResultExt;
-use std::convert::Infallible;
 use std::io::{stdin, Read};
 
 pub struct CGIRequest<B> {

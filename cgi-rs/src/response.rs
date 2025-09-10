@@ -1,8 +1,6 @@
-use crate::{error, CGIError, Result};
+use crate::{error, Result};
 use bytes::Bytes;
-use http_body_util::Full;
-use hyper::body::Body;
-use hyper::{http::HeaderValue, HeaderMap, Response};
+use hyper::{http::HeaderValue, HeaderMap};
 use snafu::ResultExt;
 use std::io::Write;
 
