@@ -21,7 +21,7 @@ async fn main() {
                 cookies.add(Cookie::new("hello_world", "hello_world"));
                 session.clear().await;
                 session.insert("foo", "bar").await.unwrap();
-                let value: String = session
+                let _value: String = session
                     .get("foo")
                     .await
                     .unwrap()
