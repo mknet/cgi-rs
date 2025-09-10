@@ -1,17 +1,20 @@
-use std::convert::Infallible;
 use crate::{error, CGIError, MetaVariable, MetaVariableKind, Result};
-use hyper::Request;
-use hyper::body::{Body, Bytes};
-use snafu::ResultExt;
-use std::io::{stdin, Read};
 use http_body_util::combinators::BoxBody;
 use http_body_util::Full;
+use hyper::body::{Body, Bytes};
+use hyper::Request;
+use snafu::ResultExt;
+use std::convert::Infallible;
+use std::io::{stdin, Read};
 
-pub struct CGIRequest<B>  {
-    pub request_body: B
+pub struct CGIRequest<B> {
+    pub request_body: B,
 }
 
-impl <B> CGIRequest<B> where B: Body {
+impl<B> CGIRequest<B>
+where
+    B: Body,
+{
     pub fn from_env() -> Result<CGIRequest<Full<Bytes>>> {
         let content_length = MetaVariableKind::ContentLength
             .from_env()
@@ -55,14 +58,9 @@ impl <B> CGIRequest<B> where B: Body {
         self.var(MetaVariableKind::RequestUri)
             .map(|uri| Ok(uri.as_str()?.to_string()))
             .unwrap_or_else(|| {
-
                 let path_info_str = match MetaVariableKind::PathInfo.try_from_env() {
-                    Ok(meta_variable) => {
-                       String::from(meta_variable.as_str().unwrap_or(""))
-                    }
-                    Err(_) => {
-                        String::from("")
-                    }
+                    Ok(meta_variable) => String::from(meta_variable.as_str().unwrap_or("")),
+                    Err(_) => String::from(""),
                 };
 
                 let script_name = MetaVariableKind::ScriptName.try_from_env()?;
@@ -87,11 +85,13 @@ macro_rules! try_set_headers {
     };
 }
 
-impl <B>TryFrom<CGIRequest<B>> for Request<B> where B: Body {
+impl<B> TryFrom<CGIRequest<B>> for Request<B>
+where
+    B: Body,
+{
     type Error = CGIError;
 
     fn try_from(cgi_request: CGIRequest<B>) -> Result<Self> {
-
         let mut request_builder = Request::builder()
             .method(
                 cgi_request

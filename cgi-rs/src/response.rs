@@ -1,10 +1,10 @@
 use crate::{error, CGIError, Result};
+use bytes::Bytes;
+use http_body_util::Full;
+use hyper::body::Body;
 use hyper::{http::HeaderValue, HeaderMap, Response};
 use snafu::ResultExt;
 use std::io::Write;
-use bytes::Bytes;
-use http_body_util::{Full};
-use hyper::body::{Body};
 
 #[derive(Debug)]
 pub struct CGIResponse {
@@ -55,9 +55,10 @@ impl CGIResponse {
     async fn write_body(self, output: &mut impl Write) -> Result<()> {
         let body = self.body;
 
-        output.write(body.as_ref()).context(error::WriteResponseSnafu)?;
+        output
+            .write(body.as_ref())
+            .context(error::WriteResponseSnafu)?;
 
         Ok(())
     }
 }
-

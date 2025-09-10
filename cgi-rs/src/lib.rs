@@ -153,7 +153,7 @@ impl MetaVariableKind {
             MetaVariableKind::ScriptFilename => "SCRIPT_FILENAME",
             MetaVariableKind::RemotePort => "REMOTE_PORT",
             MetaVariableKind::RequestUri => "REQUEST_URI",
-            MetaVariableKind::HttpCookie => "HTTP_COOKIE"
+            MetaVariableKind::HttpCookie => "HTTP_COOKIE",
         }
     }
 

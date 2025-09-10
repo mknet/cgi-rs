@@ -17,13 +17,13 @@
 //! ```
 
 use cgi_rs::{CGIError, CGIRequest, CGIResponse};
+use http_body_util::{BodyExt, Full};
+use hyper::body::{Body, Bytes};
+use hyper::{Request, Response};
 use snafu::ResultExt;
 use std::convert::Infallible;
 use std::fmt::Debug;
 use std::io::Write;
-use http_body_util::{Full, BodyExt};
-use hyper::body::{Body, Bytes};
-use hyper::{Request, Response};
 use tower::{Service, ServiceExt};
 
 /// Serve a CGI application.
@@ -35,7 +35,8 @@ where
         + Clone
         + Send
         + 'static,
-    B: Body, <B as Body>::Error: Debug
+    B: Body,
+    <B as Body>::Error: Debug,
 {
     serve_cgi_with_output(std::io::stdout(), app).await
 }
@@ -49,7 +50,8 @@ where
         + Clone
         + Send
         + 'static,
-    B: Body, <B as Body>::Error: Debug
+    B: Body,
+    <B as Body>::Error: Debug,
 {
     let request = CGIRequest::<Full<Bytes>>::from_env()
         .and_then(Request::try_from)
