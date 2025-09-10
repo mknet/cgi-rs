@@ -1,4 +1,4 @@
-use crate::{error, CGIError, MetaVariable, MetaVariableKind, Result};
+use crate::{error, MetaVariable, MetaVariableKind, Result};
 use http_body_util::Full;
 use hyper::body::{Body, Bytes};
 use hyper::Request;
@@ -87,7 +87,7 @@ impl<B> TryFrom<CGIRequest<B>> for Request<B>
 where
     B: Body,
 {
-    type Error = CGIError;
+    type Error = crate::CGIError;
 
     fn try_from(cgi_request: CGIRequest<B>) -> Result<Self> {
         let mut request_builder = Request::builder()
