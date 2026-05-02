@@ -1,18 +1,13 @@
 use axum::{routing::get, Router};
-use axum::http::StatusCode;
-use axum::response::Response;
 use tower_cookies::{Cookie, Cookies};
 use tower_sessions::cookie::time::Duration;
-use tower_sessions::{MemoryStore, Session, SessionStore};
-use tower_sessions::session::Record;
+use tower_sessions::{MemoryStore, Session};
 use tower_cgi::serve_cgi;
-
-use tower_sessions_file_based_store::FileStore;
 
 #[tokio::main]
 async fn main() {
-    let session_store = FileStore::new("./", "prefix-", ".json");
-    // let session_store = MemoryStore::default();
+    // tower-sessions-file-based-store pulls axum 0.7; MemoryStore shares our axum 0.8 tree.
+    let session_store = MemoryStore::default();
     let session_layer = tower_sessions::SessionManagerLayer::new(session_store)
         .with_secure(false)
         //.with_always_save(true)
